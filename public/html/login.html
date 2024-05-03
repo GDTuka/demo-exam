@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth</title>
+    <link rel="stylesheet" href="../css/login_form.css">
+</head>
+<body>
+    <div class="form-container">
+        <p class="title">Авторизуйтесь</p>
+        <form class="form">
+          <input type="text" name="login", class="input" placeholder="Логин">
+          <input type="password" name="password" class="input" placeholder="Пароль">
+          <button class="form-btn" type="submit">Авторизоваться</button>
+        </form>
+        <p class="sign-up-label">
+          Нет аккаута?<span class="sign-up-link">Зарегистрируйтесь</span>
+        </p>
+      </div>
+    <script>
+        // Получаем форму через селектор
+        const form = document.querySelector('form')
+
+        // Вешаем листенер. После того как пользователь нажмёт на кнопку отправки выполнится код внутри
+        form.addEventListener('submit', async (e) => {
+            // Отключает перезагрузку старницы после отправки формы
+            e.preventDefault()
+
+            // Получение инфы из формы
+            const formData = new FormData(form)
+
+            console.log(JSON.stringify(Object.fromEntries(formData)))
+
+            const response = await fetch('http://localhost:3001/login', {
+                method: 'POST',
+                headers : {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(formData)),
+            })
+        
+            const res = await response.json()
+       
+        })
+    </script>
+</body>
+</html>
